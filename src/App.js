@@ -30,7 +30,7 @@ const logout = () => {
 
 const ChatBox = () => {
   const itemCollection = firestore.collection("inventaire");
-  const itemQuery = itemCollection.limit(25);
+  const itemQuery = itemCollection.limit(100);
   const [snapshot, loading] = useCollection(itemQuery);
   const items = [];
 
@@ -41,7 +41,7 @@ const ChatBox = () => {
         name: objet.name,
         price: objet.price,
         stock: objet.stock,
-        id: item.ref.path, //id
+        id: item.id,
       });
     });
   }
@@ -63,9 +63,8 @@ const ChatBox = () => {
     setTextPrice("");
     setTextStock("");
   };
-  const retirer = async (id) => {
-    console.log(id);
-    //await itemCollection.doc(id).delete();
+  const retirer = (id) => {
+    itemCollection.doc(id).delete();
   };
   return (
     <div>
